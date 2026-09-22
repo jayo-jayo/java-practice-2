@@ -5,14 +5,14 @@ import java.util.*;
 
 public class Main {
     static void main() {
-//        massiv();
-        guess_number();
+        massiv();
+//        guess_number();
     }
 
     public static void massiv() {
-        ArrayList<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5));
+        int[] numbers1 = {1, 2, 3, 4, 5};
         System.out.println("Все элементы: ");
-        System.out.println(numbers);
+        System.out.println(Arrays.toString(numbers1));
 
         System.out.println("1 -- Добавить элемент");
         System.out.println("2 -- Удалить элемент");
@@ -24,12 +24,14 @@ public class Main {
         if (user_choice == 1) {
             System.out.print("Введите число которое хотите добавить: ");
 
-
             try {
                 Scanner number = new Scanner(System.in);
                 int user_number = number.nextInt();
-                numbers.add(user_number);
-                System.out.println(numbers);
+                int[] numbers2 = new int[numbers1.length + 1];
+
+                System.arraycopy(numbers1, 0, numbers2, 0, numbers1.length);
+                numbers2[numbers2.length - 1] = user_number;
+                System.out.println(Arrays.toString(numbers2));
 
             } catch (InputMismatchException e) {
                 System.out.println("Ошибка, Вы ввели не целое число");
@@ -37,18 +39,18 @@ public class Main {
             }
 
         } else if (user_choice == 2) {
-            System.out.print("Введите индекс элемента (от 0 до " + (numbers.size() - 1) + "): ");
-
-
-
+            System.out.print("Введите индекс элемента (от 0 до " + (numbers1.length - 1) + "): ");
 
             try {
 
                 Scanner index = new Scanner(System.in);
                 int user_index = index.nextInt();
-                if (user_index > 0 && user_index <= numbers.size() - 1) {
-                    numbers.remove(user_index);
-                    System.out.println(numbers);
+                if (user_index > 0 && user_index <= numbers1.length - 1) {
+                    int[] numbers3 = new int[numbers1.length - 1];
+
+                    System.arraycopy(numbers1, 0, numbers3, 0, user_index);
+                    System.arraycopy(numbers1, user_index + 1, numbers3, user_index, numbers1.length - user_index - 1);
+                    System.out.println(Arrays.toString(numbers3));
                 } else {
                     System.out.println("Ошибка, Вы ввели индекс которого нет в массиве");
                 }
@@ -79,7 +81,6 @@ public class Main {
 
                 if (number_user < 1 || number_user > 100) {
                     System.out.println("Вы ввели число вне диапазона");
-                    count++;
                     continue;
 
                 } else if (number_user < number_computer) {
